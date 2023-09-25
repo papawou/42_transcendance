@@ -1,0 +1,1 @@
+export PATH="$PATH:$HOME/sgoinfre/node-v18.17.1-darwin-x64/bin/"
