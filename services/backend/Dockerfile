@@ -15,6 +15,4 @@ RUN apt-get update && apt-get install -y\
 
 WORKDIR /src/backend
 
-RUN npm i
-
-ENTRYPOINT [ "echo", "backend", "started" ]
+ENTRYPOINT [ "bash" ]

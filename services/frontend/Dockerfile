@@ -15,4 +15,4 @@ RUN apt-get update && apt-get install -y\
 
 WORKDIR /src/frontend
 
-ENTRYPOINT [ "npm i" ]
+ENTRYPOINT [ "bash"]

@@ -1,10 +1,16 @@
 services:
   frontend:
+    ports:
+      - 5173:5173
+    stdin_open: true
+    tty: true   
     volumes:
       - frontend_vol:/src/frontend
     build:
       context: ./services/frontend
   backend:
+    stdin_open: true
+    tty: true 
     volumes:
       - backend_vol:/src/backend
     build:
