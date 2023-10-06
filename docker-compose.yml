@@ -19,6 +19,11 @@ services:
       context: ./services/backend
     networks:
       frontend:
+  database:
+    build:
+      context: ./services/database
+    networks:
+      backend:
 
 networks:
   frontend:
