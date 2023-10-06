@@ -8,6 +8,8 @@ services:
       - frontend_vol:/src/frontend
     build:
       context: ./services/frontend
+    networks:
+      frontend:
   backend:
     stdin_open: true
     tty: true 
@@ -15,6 +17,12 @@ services:
       - backend_vol:/src/backend
     build:
       context: ./services/backend
+    networks:
+      frontend:
+
+networks:
+  frontend:
+  backend:
 
 volumes:
   frontend_vol:
