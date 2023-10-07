@@ -24,6 +24,8 @@ services:
       context: ./services/database
     networks:
       backend:
+    volumes:
+      - database_vol:/var/lib/postgres/data
 
 networks:
   frontend:
@@ -42,3 +44,9 @@ volumes:
       type: none
       o: bind
       device: ${BACKEND_SRC}
+  database_vol:
+    driver: local
+    driver_opts:
+      type: none
+      o: bin
+      device: ${DATABASE_SRC}

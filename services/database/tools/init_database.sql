@@ -1,5 +1,7 @@
---USERS
+CREATE DATABASE IF NOT EXISTS transcendance;
+\c transcendance;
 
+--USERS
 CREATE TABLE users IF NOT EXISTS (
     id_user bigint GENERATED IDENTITY AS ALWAYS PRIMARY KEY,
     username VARCHAR,
