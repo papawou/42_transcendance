@@ -10,6 +10,7 @@ services:
       context: ./services/frontend
     networks:
       frontend:
+
   backend:
     stdin_open: true
     tty: true 
@@ -19,15 +20,20 @@ services:
       context: ./services/backend
     networks:
       frontend:
+
   database:
+    ports:
+      - 5432:5432
     stdin_open: true
     tty: true 
     build:
       context: ./services/database
+      args:
+        - DB_NAME=${DB_NAME}
+        - DB_USERNAME=${DB_USERNAME}
+        - DB_USERPWD=${DB_USERPWD}
     networks:
       backend:
-    volumes:
-      - database_vol:/var/lib/postgres/data
 
 networks:
   frontend:

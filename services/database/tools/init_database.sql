@@ -1,14 +1,11 @@
-CREATE DATABASE IF NOT EXISTS transcendance;
-\c transcendance;
-
 --USERS
-CREATE TABLE users IF NOT EXISTS (
+CREATE TABLE IF NOT EXISTS users  (
     id_user bigint GENERATED IDENTITY AS ALWAYS PRIMARY KEY,
     username VARCHAR,
     avatar VARCHAR
 );
 
-CREATE TABLE user_to_user IF NOT EXISTS (
+CREATE TABLE IF NOT EXISTS user_to_user  (
     id_user_src bigint REFERENCES users,
     id_user_dst bigint REFERENCES users,
     PRIMARY KEY (id_user_src, id_user_dst)
@@ -16,14 +13,14 @@ CREATE TABLE user_to_user IF NOT EXISTS (
 
 --CONVERSATIONS
 
-CREATE TABLE conversations IF NOT EXISTS (
+CREATE TABLE IF NOT EXISTS onversations  (
     id_conversation bigint GENERATED IDENTITY AS ALWAYS PRIMARY KEY,
     is_channel bigint REFERENCES channels,
     is_discussion bigint REFERENCES discussions,
     CHECK (is_channel IS NOT NULL + is_discussion IS NOT NULL = 1)
 );
 
-CREATE TABLE conversation_messages IF NOT EXISTS (
+CREATE TABLE IF NOT EXISTS conversation_messages (
     id_msg bigint GENERATED IDENTITY AS ALWAYS PRIMARY KEY,
     id_conversation bigint REFERENCES conversations,
     id_sender bigint REFERENCES users,
@@ -32,7 +29,7 @@ CREATE TABLE conversation_messages IF NOT EXISTS (
 
 -- DISCUSSIONS
 
-CREATE TABLE discussions IF NOT EXISTS (
+CREATE TABLE IF NOT EXISTS discussions  (
     id_discussion bigint GENERATED IDENTITY AS ALWAYS PRIMARY KEY,
     id_user_left bigint NOT NULL REFERENCES users,
     id_user_right bigint NOT NULL REFERENCES users,
@@ -41,11 +38,11 @@ CREATE TABLE discussions IF NOT EXISTS (
 
     FOREIGN KEY (id_discussion) REFERENCES conversations(is_discussion);
 );
-ALTER TABLE conversations ADD CONSTRAINT fk_conversation_is_discussion FOREIGN KEY (is_discussion) REFERENCES discussions;
+ALTER TABLE conversations ADD CONSTRAINT IF NOT EXISTS fk_conversation_is_discussion FOREIGN KEY (is_discussion) REFERENCES discussions;
 
 -- CHANNELS
 
-CREATE TABLE channels IF NOT EXISTS (
+CREATE TABLE IF NOT EXISTS channels  (
     id_channel bigint GENERATED IDENTITY AS ALWAYS PRIMARY KEY,
     id_owner bigint NOT NULL REFERENCES users,
     name VARCHAR,
@@ -53,7 +50,7 @@ CREATE TABLE channels IF NOT EXISTS (
 );
 ALTER TABLE conversations ADD CONSTRAINT fk_conversation_is_channel FOREIGN KEY (is_channel) REFERENCES channels;
 
-CREATE TABLE channel_users IF NOT EXISTS (
+CREATE TABLE IF NOT EXISTS channel_users  (
     id_channel bigint REFERENCES channels,
     id_user bigint REFERENCES users,
     PRIMARY KEY (id_channel, id_user),

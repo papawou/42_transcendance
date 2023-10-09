@@ -1,5 +1,9 @@
 FROM debian:buster
 
+ARG DB_NAME
+ARG DB_USERNAME
+ARG DB_USERPWD
+
 RUN apt-get update && apt-get install -y\
     wget\
     gnupg\
@@ -15,6 +19,8 @@ COPY /tools /tmp
 
 WORKDIR /tmp
 RUN chmod 777 /tmp/configure.sh
+
+USER postgres
 RUN ./configure.sh
 
-ENTRYPOINT [ "bash" ]
+ENTRYPOINT [ "/usr/lib/postgresql/15/bin/postgres", "-D", "/etc/postgresql/15/main" ]
