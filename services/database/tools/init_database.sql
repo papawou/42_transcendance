@@ -1,6 +1,6 @@
 --USERS
 CREATE TABLE IF NOT EXISTS users  (
-    id_user bigint GENERATED IDENTITY AS ALWAYS PRIMARY KEY,
+    id_user bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     username VARCHAR,
     avatar VARCHAR
 );
@@ -14,14 +14,14 @@ CREATE TABLE IF NOT EXISTS user_to_user  (
 --CONVERSATIONS
 
 CREATE TABLE IF NOT EXISTS onversations  (
-    id_conversation bigint GENERATED IDENTITY AS ALWAYS PRIMARY KEY,
+    id_conversation bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     is_channel bigint REFERENCES channels,
     is_discussion bigint REFERENCES discussions,
-    CHECK (is_channel IS NOT NULL + is_discussion IS NOT NULL = 1)
+    CHECK ((is_channel IS NOT NULL)::integer + (is_discussion IS NOT NULL)::integer = 1)
 );
 
 CREATE TABLE IF NOT EXISTS conversation_messages (
-    id_msg bigint GENERATED IDENTITY AS ALWAYS PRIMARY KEY,
+    id_msg bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     id_conversation bigint REFERENCES conversations,
     id_sender bigint REFERENCES users,
     content varchar
@@ -30,20 +30,20 @@ CREATE TABLE IF NOT EXISTS conversation_messages (
 -- DISCUSSIONS
 
 CREATE TABLE IF NOT EXISTS discussions  (
-    id_discussion bigint GENERATED IDENTITY AS ALWAYS PRIMARY KEY,
+    id_discussion bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     id_user_left bigint NOT NULL REFERENCES users,
     id_user_right bigint NOT NULL REFERENCES users,
     UNIQUE(id_user_left, id_user_right),
     UNIQUE(id_user_right, id_user_left),
 
-    FOREIGN KEY (id_discussion) REFERENCES conversations(is_discussion);
+    FOREIGN KEY (id_discussion) REFERENCES conversations(is_discussion)
 );
-ALTER TABLE conversations ADD CONSTRAINT IF NOT EXISTS fk_conversation_is_discussion FOREIGN KEY (is_discussion) REFERENCES discussions;
+ALTER TABLE conversations ADD CONSTRAINT fk_conversation_is_discussion FOREIGN KEY (is_discussion) REFERENCES discussions;
 
 -- CHANNELS
 
 CREATE TABLE IF NOT EXISTS channels  (
-    id_channel bigint GENERATED IDENTITY AS ALWAYS PRIMARY KEY,
+    id_channel bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     id_owner bigint NOT NULL REFERENCES users,
     name VARCHAR,
     password VARCHAR

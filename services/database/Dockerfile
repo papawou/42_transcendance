@@ -1,9 +1,5 @@
 FROM debian:buster
 
-ARG DB_NAME
-ARG DB_USERNAME
-ARG DB_USERPWD
-
 RUN apt-get update && apt-get install -y\
     wget\
     gnupg\
@@ -11,12 +7,14 @@ RUN apt-get update && apt-get install -y\
 
 RUN sh -c 'echo "deb https://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
 RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
-
 RUN apt-get update 
 RUN apt-get install -y postgresql-15
 
-COPY /tools /tmp
+ARG DB_NAME
+ARG DB_USERNAME
+ARG DB_USERPWD
 
+COPY /tools /tmp
 WORKDIR /tmp
 RUN chmod 777 /tmp/configure.sh
 
