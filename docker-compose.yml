@@ -7,6 +7,7 @@ services:
     volumes:
       - frontend_vol:/src/frontend
     build:
+      target: start
       context: ./services/frontend
     networks:
       frontend:
@@ -17,6 +18,7 @@ services:
     volumes:
       - backend_vol:/src/backend
     build:
+      target: start
       context: ./services/backend
     networks:
       frontend:

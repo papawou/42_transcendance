@@ -1,4 +1,4 @@
-FROM debian:buster
+FROM debian:buster AS builder
 
 RUN apt-get update && apt-get install -y\
     ca-certificates\
@@ -16,3 +16,10 @@ RUN apt-get update && apt-get install -y\
 WORKDIR /src/frontend
 
 ENTRYPOINT [ "bash"]
+
+FROM builder AS start
+
+COPY /tools/start.sh /tmp
+RUN chmod 777 /tmp/start.sh
+
+ENTRYPOINT ["/tmp/start.sh"]

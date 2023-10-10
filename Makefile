@@ -6,10 +6,10 @@ DOCKER_COMPOSE_CMD := docker compose -f ${SRC} -p ${NAME}
 all: down build up
 
 build:
-	${DOCKER_COMPOSE_CMD} build --no-cache --force-rm
+	${DOCKER_COMPOSE_CMD} build
 
 up:
-	${DOCKER_COMPOSE_CMD} up --force-recreate
+	${DOCKER_COMPOSE_CMD} up
 
 down:
 	${DOCKER_COMPOSE_CMD} down
