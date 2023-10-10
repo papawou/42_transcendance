@@ -13,7 +13,7 @@ RUN NODE_MAJOR=20 && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] http
 RUN apt-get update && apt-get install -y\
     nodejs
 
-WORKDIR /src/backend
+WORKDIR /node/app
 
 ENTRYPOINT [ "bash" ]
 

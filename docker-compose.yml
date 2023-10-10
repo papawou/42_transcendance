@@ -5,9 +5,8 @@ services:
     stdin_open: true
     tty: true   
     volumes:
-      - frontend_vol:/src/frontend
+        - "${FRONTEND_SRC}:/node/app:delegated"
     build:
-      target: start
       context: ./services/frontend
     networks:
       frontend:
@@ -16,9 +15,8 @@ services:
     stdin_open: true
     tty: true 
     volumes:
-      - backend_vol:/src/backend
+      - "${BACKEND_SRC}:/node/app:delegated"
     build:
-      target: start
       context: ./services/backend
     networks:
       frontend:
@@ -27,7 +25,7 @@ services:
     ports:
       - 5432:5432
     stdin_open: true
-    tty: true 
+    tty: true
     build:
       context: ./services/database
       args:
@@ -40,23 +38,3 @@ services:
 networks:
   frontend:
   backend:
-
-volumes:
-  frontend_vol:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: ${FRONTEND_SRC}
-  backend_vol:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: ${BACKEND_SRC}
-  database_vol:
-    driver: local
-    driver_opts:
-      type: none
-      o: bin
-      device: ${DATABASE_SRC}
