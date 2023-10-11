@@ -17,7 +17,6 @@ services:
     volumes:
       - "${BACKEND_SRC}:/node/app:delegated"
     build:
-      target: builder
       context: ./services/backend
     networks:
       backend:
