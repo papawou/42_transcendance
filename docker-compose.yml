@@ -3,15 +3,15 @@ services:
     ports:
       - 5173:5173
     stdin_open: true
-    tty: true   
+    tty: true
     volumes:
         - "${FRONTEND_SRC}:/node/app:delegated"
     build:
       context: ./services/frontend
-    networks:
-      frontend:
 
   backend:
+    ports:
+      - 3000:3000
     stdin_open: true
     tty: true 
     volumes:
@@ -19,7 +19,7 @@ services:
     build:
       context: ./services/backend
     networks:
-      frontend:
+      backend:
 
   database:
     ports:
@@ -36,5 +36,4 @@ services:
       backend:
 
 networks:
-  frontend:
   backend:
