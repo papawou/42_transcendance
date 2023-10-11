@@ -17,6 +17,7 @@ services:
     volumes:
       - "${BACKEND_SRC}:/node/app:delegated"
     build:
+      target: builder
       context: ./services/backend
     networks:
       backend:
@@ -34,6 +35,8 @@ services:
         - DB_USERPWD=${DB_USERPWD}
     networks:
       backend:
+        aliases:
+          - postgresql
 
 networks:
   backend:
