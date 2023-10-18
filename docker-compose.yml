@@ -1,12 +1,13 @@
 services:
   frontend:
     ports:
-      - 5173:5173
+      - ${FRONTEND_PORT}:5173
     stdin_open: true
     tty: true
     volumes:
         - "${FRONTEND_SRC}:/node/app:delegated"
     build:
+      target: starter
       context: ./services/frontend
 
   backend:
@@ -17,7 +18,7 @@ services:
     volumes:
       - "${BACKEND_SRC}:/node/app:delegated"
     build:
-      target: builder
+      target: starter
       context: ./services/backend
     networks:
       backend:
@@ -28,6 +29,7 @@ services:
     stdin_open: true
     tty: true
     build:
+      target: starter
       context: ./services/database
       args:
         - DB_NAME=${DB_NAME}

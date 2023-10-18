@@ -1,4 +1,4 @@
-FROM debian:buster
+FROM debian:buster AS builder
 
 RUN apt-get update && apt-get install -y\
     wget\
@@ -20,5 +20,9 @@ RUN chmod 777 /tmp/configure.sh
 
 USER postgres
 RUN ./configure.sh
+
+ENTRYPOINT [ "bash" ]
+
+FROM builder as starter
 
 ENTRYPOINT [ "/usr/lib/postgresql/15/bin/postgres", "-D", "/etc/postgresql/15/main" ]
