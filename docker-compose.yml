@@ -9,6 +9,8 @@ services:
     build:
       target: starter
       context: ./services/frontend
+    networks:
+      backend:
 
   backend:
     ports:
@@ -22,6 +24,8 @@ services:
       context: ./services/backend
     networks:
       backend:
+        aliases:
+          - "backend"
 
   database:
     ports:
