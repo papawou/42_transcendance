@@ -38,6 +38,8 @@ down:
 
 clean:
 	${DOCKER_COMPOSE_CMD} down -v
+	@docker system prune -a --volumes
+
 
 re : clean all
 
