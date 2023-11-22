@@ -25,13 +25,13 @@ database_dev:
 	docker attach transcendance-database-1
 
 frontend:
-	 ${DOCKER_COMPOSE_CMD} up --build frontend
+	 ${DOCKER_COMPOSE_CMD} up -d --build frontend
 
 backend:
-	 ${DOCKER_COMPOSE_CMD} up --build backend
+	 ${DOCKER_COMPOSE_CMD} up -d --build backend
 
 database:
-	 ${DOCKER_COMPOSE_CMD} up --build database
+	 ${DOCKER_COMPOSE_CMD} up -d --build database
 
 down:
 	${DOCKER_COMPOSE_CMD} down
