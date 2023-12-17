@@ -11,6 +11,8 @@ services:
       context: ./services/frontend
     networks:
       backend:
+    dns:
+      - 8.8.8.8
 
   backend:
     ports:
