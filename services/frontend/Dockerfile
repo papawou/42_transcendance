@@ -1,25 +1,19 @@
-FROM debian:buster AS builder
+FROM node:18-alpine3.16
 
-RUN apt-get update && apt-get install -y\
-    ca-certificates\
-    curl\
-    gnupg
+WORKDIR /app
 
-RUN mkdir -p /etc/apt/keyrings
-RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
+COPY 42_transcendance_front .
 
-RUN NODE_MAJOR=20 && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list
+RUN npm install
+RUN npm run build
 
-RUN apt-get update && apt-get install -y\
-    nodejs
+FROM nginx
 
-WORKDIR /node/app
+COPY services/frontend/tools/nginx.conf /etc/nginx/conf.d/default.conf
 
-ENTRYPOINT [ "bash"]
+RUN rm -rf /usr/share/nginx/html/*
+COPY --from=build /app/dist /usr/share/nginx/html
 
-FROM builder AS starter
+WORKDIR /usr/share/nginx/html
 
-COPY /tools/start.sh /tmp
-RUN chmod 777 /tmp/start.sh
-
-ENTRYPOINT ["/tmp/start.sh"]
+CMD ["/bin/sh", "-c", "nginx -g \"daemon off;\""]

@@ -4,11 +4,7 @@ services:
       - ${FRONTEND_PORT}:5173
     stdin_open: true
     tty: true
-    volumes:
-      - "${FRONTEND_SRC}:/node/app:delegated"
-    build:
-      target: starter
-      context: ./services/frontend
+    build: ./services/frontend
     networks:
       backend:
     dns:
@@ -22,7 +18,6 @@ services:
     volumes:
       - "${BACKEND_SRC}:/node/app:delegated"
     build:
-      target: starter
       context: ./services/backend
     networks:
       backend:
@@ -37,7 +32,6 @@ services:
     volumes:
       - kdb:/var/lib/postgresql/
     build:
-      target: starter
       context: ./services/database
       args:
         - DB_NAME=${DB_NAME}
@@ -50,6 +44,7 @@ services:
 
 networks:
   backend:
+
 
 volumes:
   kdb:
