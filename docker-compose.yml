@@ -5,7 +5,7 @@ services:
     stdin_open: true
     tty: true
     volumes:
-        - "${FRONTEND_SRC}:/node/app:delegated"
+      - "${FRONTEND_SRC}:/node/app:delegated"
     build:
       target: starter
       context: ./services/frontend
@@ -18,7 +18,7 @@ services:
     ports:
       - 3000:3000
     stdin_open: true
-    tty: true 
+    tty: true
     volumes:
       - "${BACKEND_SRC}:/node/app:delegated"
     build:
@@ -34,6 +34,8 @@ services:
       - 5432:5432
     stdin_open: true
     tty: true
+    volumes:
+      - kdb:/var/lib/postgresql/
     build:
       target: starter
       context: ./services/database
@@ -48,3 +50,6 @@ services:
 
 networks:
   backend:
+
+volumes:
+  kdb:
